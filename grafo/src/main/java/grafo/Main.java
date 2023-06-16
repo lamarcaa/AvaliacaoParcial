@@ -1,38 +1,47 @@
-package grafo;
+import grafo.Graph;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        Graph graph = new Graph();
-        graph.addVertex("a");
-        graph.addVertex("b");
-        graph.addVertex("c");
-        graph.addVertex("d");
-        graph.addEdge("a", "b");
-        graph.addEdge("a", "c");
-        graph.addEdge("b", "c");
-        graph.addEdge("a", "d");
+  public static void main(String[] args) {
+    Graph graph = new Graph();
+    graph.addVertex("A");
+    graph.addVertex("B");
+    graph.addVertex("C");
+    graph.addVertex("D");
+    graph.addVertex("E");
+    graph.addVertex("F");
+    graph.addVertex("G");
 
-        System.out.println(graph);
-        System.out.println("Vizinhos: " + graph.neighbours("a"));
+    graph.addEdge("A", "B");
+    graph.addEdge("A", "C");
+    graph.addEdge("B", "D");
+    graph.addEdge("B", "E");
+    graph.addEdge("C", "F");
+    graph.addEdge("E", "G");
 
-        if (graph.direct("a", "c"))
-            System.out.println("A e C estão ligados!");
+    System.out.println("Grafo:");
+    System.out.println(graph);
 
-        if (!graph.direct("b", "d"))
-            System.out.println("B e D NÃO estão ligados!");
+    System.out.println("Vizinhos de B: " + graph.neighbours("B"));
 
-        Graph graph2 = new Graph();
-        graph2.addVertex("a");
-        graph2.addVertex("e");
-        graph2.addVertex("f");
-        graph2.addVertex("g");
-        graph2.addEdge("a", "e");
-        graph2.addEdge("a", "f");
-        graph2.addEdge("g", "e");
-        graph2.addEdge("e", "f");
+    System.out.println("Existe uma aresta direta de C para F? " + graph.direct("C", "F"));
+    System.out.println("Existe uma aresta direta de D para E? " + graph.direct("D", "E"));
 
-        System.out.println("Caminho: " + graph.caminho("a", "b"));
-        System.out.println("União: " + graph.uniao(graph2));
-        System.out.println("Interseção: " + graph.interseccao(graph2));
-    }
+    System.out.println("Caminho de A para G: " + graph.bfs("A", "G"));
+
+    Graph graph2 = new Graph();
+    graph2.addVertex("E");
+    graph2.addVertex("F");
+    graph2.addVertex("G");
+    graph2.addEdge("E", "F");
+    graph2.addEdge("F", "G");
+
+    Graph union = graph.uniao(graph2);
+    System.out.println("União dos grafos:");
+    System.out.println(union);
+
+    Graph intersection = graph.interseccao(graph2);
+    System.out.println("Interseção dos grafos:");
+    System.out.println(intersection);
+  }
 }

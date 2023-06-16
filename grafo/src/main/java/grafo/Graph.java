@@ -238,4 +238,55 @@ public class Graph {
 
     return intersection;
     }
+
+/* codigo da avaliacao final */
+
+
+  public List<Vertex> bfs(String startLabel, String endLabel) {
+    // Encontra os vértices de início e fim com base em seus rótulos
+    Vertex start = findVertex(startLabel);
+    Vertex end = findVertex(endLabel);
+
+    // Verifica se os vértices de início e fim existem no grafo
+    if (start == null || end == null)
+      return null;
+
+    // Conjunto de vértices visitados durante a busca
+    Set<Vertex> visited = new HashSet<>();
+    
+    // Fila para armazenar os caminhos a serem explorados
+    Queue<List<Vertex>> queue = new LinkedList<>();
+
+    // Marca o vértice de início como visitado e adiciona o caminho inicial à fila
+    visited.add(start);
+    queue.add(Arrays.asList(start));
+
+    // Algoritmo BFS
+    while (!queue.isEmpty()) {
+      // Remove o próximo caminho da fila para explorá-lo
+      List<Vertex> path = queue.remove();
+      Vertex last = path.get(path.size() - 1);
+
+      // Verifica se o último vértice no caminho é o vértice de destino
+      if (last == end)
+        return path;
+
+      // Explora todos os vizinhos do último vértice no caminho
+      for (Edge edge : last.getEdges()) {
+        Vertex neighbor = edge.getTo();
+        if (!visited.contains(neighbor)) {
+          // Se o vizinho não foi visitado, marca-o como visitado
+          visited.add(neighbor);
+          // Cria um novo caminho adicionando o vizinho ao final do caminho atual
+          List<Vertex> newPath = new ArrayList<>(path);
+          newPath.add(neighbor);
+          // Adiciona o novo caminho à fila para ser explorado posteriormente
+          queue.add(newPath);
+        }
+      }
+    }
+
+    // Se não foi encontrado um caminho entre os vértices de início e fim
+    return null;
+}
 }
